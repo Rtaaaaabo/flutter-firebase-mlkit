@@ -1,5 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+// import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_ml_vision/firebase_ml_vision.dart';
+import 'package:flutter_camera_ml_vision/flutter_camera_ml_vision.dart';
+
+// final dummySnapshot = [
+//   {"name": "Filip", "votes": 15},
+//   {"name": "Abraham", "votes": 14},
+//   {"name": "Richard", "votes": 11},
+//   {"name": "Ike", "votes": 10},
+//   {"name": "Justin", "votes": 1},
+// ];
 
 void main() => runApp(MyApp());
 
