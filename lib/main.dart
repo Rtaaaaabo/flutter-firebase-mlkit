@@ -3,14 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:firebase_ml_vision/firebase_ml_vision.dart';
 import 'package:flutter_camera_ml_vision/flutter_camera_ml_vision.dart';
 
-// final dummySnapshot = [
-//   {"name": "Filip", "votes": 15},
-//   {"name": "Abraham", "votes": 14},
-//   {"name": "Richard", "votes": 11},
-//   {"name": "Ike", "votes": 10},
-//   {"name": "Justin", "votes": 1},
-// ];
-
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
@@ -36,13 +28,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
+  List<String> data = [];
 
   @override
   Widget build(BuildContext context) {
@@ -50,25 +36,53 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         title: Text(widget.title),
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.display1,
+      body: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          RaisedButton(
+            child: Text('Scan product'),
+            onPressed: () async {
+              final barcord = await Navigator.of(context)
+                  .push<Barcode>(MaterialPageRoute(builder: (c) {
+                return ScanPage();
+              }));
+              if (barcord == null) {
+                return;
+              }
+
+              setState(() {
+                data.add(barcord.displayValue);
+              });
+            },
+          ),
+          Expanded(
+            child: ListView(
+              children: data.map((d) => Text(d)).toList(),
             ),
-            Text(
-              'Taku have pushed the button this many times:',
-            ),
-          ],
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: Icon(Icons.add),
+          )
+        ],
       ),
     );
+  }
+}
+
+
+class ScanPage extends StatefulWidget {
+  @override
+  _ScanPageState createState() => _ScanPageState();
+}
+
+class _ScanPageState extends State<ScanPage> {
+  bool resultSent = false;
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: SafeArea(
+        child: SizedBox(
+          
+        ),
+      ),
+    )
   }
 }
